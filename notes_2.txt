@@ -1,0 +1,26 @@
+-led_control_ws : workspace of the block that controls leds
+
+-demosaicing_ws : workspace of the block that does the demosaicing (contains other functions (white balance/ homegenise light) that needs to be made in an independant WS)
+
+-camera_control_ws : main code that does the whole pipeline (started as cam control only, hence the name) 
+
+
+
+-BMP_BS : library (+ documentation) that allows opening & editing bmp images in Cpp
+-dcraw : tool that converts RAW images to ppm (and then bmp)
+-main-ws : where i put the executables of the different blocks 
+
+
+
+#####################################
+#### White balancing algorithmic ####
+#####################################
+white balancing:
+	- open object image & white ref image
+	- for each pixel of white ref image, calculate the coeffs of rgb : 
+		1- check 'max' val btwn r,g,b 	
+		2- coeff_R = max / white_R
+		   coeff_G = max / white_G
+		   coeff_B = max / white_B
+	- for each pixel of object image, multiply the r,g,b values with the equivalent coeffs calculated in step 2
+	-save image

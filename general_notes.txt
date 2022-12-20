@@ -1,0 +1,117 @@
+########################################
+RESEARCH LAB
+
+# MY RPI SETTINGS #
+	hostname: eurposeidon.local
+	username: eur_poseidon
+	password: eur2022
+
+## SETUP ##
+
+	* use rpi imager to write the 'rpi os' on the sd card
+	* make sure to set up in the advanced settings the 'hostname', the 'username' & 'password', and enable SSH
+
+
+	* make sure computer network settings are set to automatic, then enable ICS (internet connx sharing) : optional but useful to get internet access to the rpi
+
+	* Download Filezilla (easiest way to transfer data, using sftp)
+
+
+## CONNECT VIA CMD USING SSH ##
+	* connect the RPI with the PC with the ethernet cable
+	*get ip adress of RPI 
+		$ ping hostname (in my case 'eurposeidon.local')
+	* ssh onto the RPI		
+		$ ssh username@ip_adress (in my case eur_poseidon@169.168.137.195) 
+	* you will be asked to type the password
+	*connected
+
+
+## PIPELINE ##
+	* once connected, run the '.exe' that will execute the pipeline for saving the imgs in RAW (dng) format (this is a compiled c/c++ program)
+	1. LED COMMAND (pi_1 5v / pi_3 gnd / pi_6 pwm)
+		$ sudo python3 test.py --led_1 255 255 255  --led_2 255 255 255
+	2. CAPTURE RAW IMG
+		$ ./use_cam
+	3. CONVERT DNG TO TIFF (currently done in my pc, looking forward to implement it in RPi)
+		$ dcraw-9.27-ms-64-bit.exe -v -6 -D -T -S 16383 -o 0 -g 1.0 0 [img_name]
+	4. TRANSFER IMGS
+		Samba (see next part)
+
+## TRANSFER DATA FROM RPI TO WINDOWS ##
+	* disconnect the ssh connection
+	* Open Filezilla, connect to the RPI
+	* Just drag & drop the generated folder with all the imgs taken
+	* disconnect 
+
+## THE END 
+
+
+########################################################################################################################
+## NOTES TO SELF ##
+	* As a reminder, C/C++ requires pre-compilation, you can do it with this command:
+		$ g++ -o test1 test1.cpp
+	* Then you can run your program with
+		$ ./test1
+########################################################################################################################
+
+Setting up Samba on your Raspberry Pi
+	######################################
+	######################################
+	######################################
+	######################################
+	######################################
+	######################################
+
+	1. as always, make sure everything is up to date
+	sudo apt-get update
+	sudo apt-get upgrade
+
+	2. install Samba software on the RPi
+	sudo apt-get install samba samba-common-bin
+
+	3. create a folder that we will share
+	mkdir /home/eur_poseidon/shared_samba
+
+	4. edit the samba config file, in order to share this folder
+	sudo nano /etc/samba/smb.conf
+
+	5. details of the share (define the access point of the share)
+	[panini]
+	path = /home/eur_poseidon/shared_samba
+	writeable=Yes
+	create mask=0777
+	directory mask=0777
+	public=no
+
+	6. set up a user for our samba share on the RPi
+	sudo smbpasswd -a eur_poseidon
+
+	7. restart the samba service
+	sudo systemctl restart smbd
+
+
+##########################################
+Connecting to your Samba Server on Windows
+##########################################
+
+	1. open the run box
+	win + r
+
+	2. 
+	\\169.254.5.226\panini
+	or
+	\\eurposeidon.local\panini
+
+	3.
+	usr:  eur_poseidon
+	pswd: eur2022
+
+	4. now you have direct access to the share
+
+
+./dcraw -D -c first_test.dng | ppmtobmp > crw_0001.bmp 
+
+./dcraw -D -c first_test.dng
+ppmtobmp first_test.pgm > output.bmp
+
