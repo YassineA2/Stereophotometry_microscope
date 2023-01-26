@@ -1,47 +1,3 @@
-// #include "../EasyBMP.h"
-// using namespace std;
-
-// int main( int argc, char* argv[] )
-// {
-//   cout << endl
-//       << "Using EasyBMP Version " << _EasyBMP_Version_ << endl << endl
-//       << "Copyright (c) by the EasyBMP Project 2005-6" << endl
-//       << "WWW: http://easybmp.sourceforge.net" << endl << endl
-//       << "TESTING BMP image manipulation"<<endl<<endl;
-  
-//   BMP Image_input;
-//   Image_input.ReadFromFile("EasyBMPbackground.bmp");
-
-//   BMP Output;
-//   Output.SetSize( Image_input.TellWidth() , Image_input.TellHeight() );
-//   Output.SetBitDepth( 24 );
-
-//   cout << "File info:" <<endl;
-//   cout << Output.TellWidth() << "x" << Output.TellHeight() << "  at  " << Output.TellBitDepth()<< "bpp"<<endl;
-
-//   // // show the color of pixel (14,18) + change it + show it again
-//   // cout << "(" << (int) Output(14,18)->Red
-//   //     << ","
-//   //     << (int) Output(14,18)->Green << ","
-//   //     << (int) Output(14,18)->Blue << ","
-//   //     << (int) Output(14,18)->Alpha << ")" << endl;
-
-
-//   //     Output(14,18)->Red= 50;
-//   //     Output(14,18)->Green = 50;
-//   //     Output(14,18)->Blue = 192;
-//   //     Output(14,18)->Alpha = 0;
-
-//   //     cout << "(" << (int) Output(14,18)->Red
-//   //     << ","
-//   //     << (int) Output(14,18)->Green << ","
-//   //     << (int) Output(14,18)->Blue << ","
-//   //     << (int) Output(14,18)->Alpha << ")" << endl;
-
-
-// Output.WriteToFile("copied.bmp")
-// }
-
 #include "../EasyBMP.h"
 using namespace std;
 
@@ -131,16 +87,16 @@ void white_balance(BMP &Image_output, BMP demosaiced_white){
           max_val = demosaiced_white(x,y)->Red;
         if((demosaiced_white(x,y)->Green >= demosaiced_white(x,y)->Red) && (demosaiced_white(x,y)->Green >= demosaiced_white(x,y)->Blue))
             max_val = demosaiced_white(x,y)->Green;
-          if((demosaiced_white(x,y)->Blue >= demosaiced_white(x,y)->Red) && (demosaiced_white(x,y)->Blue >= demosaiced_white(x,y)->Green))
-            max_val = demosaiced_white(x,y)->Blue;
+        if((demosaiced_white(x,y)->Blue >= demosaiced_white(x,y)->Red) && (demosaiced_white(x,y)->Blue >= demosaiced_white(x,y)->Green))
+          max_val = demosaiced_white(x,y)->Blue;
 
-          coeff_R = max_val / demosaiced_white(x,y)->Red;
-          coeff_G = max_val / demosaiced_white(x,y)->Green;
-          coeff_B = max_val / demosaiced_white(x,y)->Blue;
+        coeff_R = max_val / demosaiced_white(x,y)->Red;
+        coeff_G = max_val / demosaiced_white(x,y)->Green;
+        coeff_B = max_val / demosaiced_white(x,y)->Blue;
 
-      Image_output(x,y)->Red   = coeff_R * Image_output(x,y)->Red
-      Image_output(x,y)->Green = coeff_G * Image_output(x,y)->Green
-      Image_output(x,y)->Blue  = coeff_B * Image_output(x,y)->Blue
+        Image_output(x,y)->Red   = coeff_R * Image_output(x,y)->Red;
+        Image_output(x,y)->Green = coeff_G * Image_output(x,y)->Green;
+        Image_output(x,y)->Blue  = coeff_B * Image_output(x,y)->Blue;
       }
     }
 }
@@ -149,36 +105,14 @@ void white_balance(BMP &Image_output, BMP demosaiced_white){
 int main( int argc, char* argv[] )
 {
   
-  // Open a BMP IMG, and demosaice it
   BMP Image_input;
-  //Image_input.ReadFromFile("first_test.bmp");
+  BMP White_img_input;
+
   Image_input.ReadFromFile(argv[1]);
+  White_img_input.ReadFromFile(argv[2]);
 
-  // show img dimensions
-  // cout << "File info:" <<endl;
-  // cout << Image_input.TellWidth() << "x" << Image_input.TellHeight() << "  at  " << Image_input.TellBitDepth()<< "bpp"<<endl;
-
-  BMP Image_output;
-  Image_output.SetSize( Image_input.TellWidth()/2 , Image_input.TellHeight()/2 );
-  Image_output.SetBitDepth( 24 );
-  demosaicing_basic(Image_input, Image_output);
-
-
-
-  // // open white ref image and demosaice it
-  // BMP white_ref_img;
-  // white_ref_img.ReadFromFile("white_ref.bmp");
-
-  // BMP demosaiced_white;
-  // demosaiced_white.SetSize( white_ref_img.TellWidth()/2 , white_ref_img.TellHeight()/2 );
-  // demosaiced_white.SetBitDepth( 24 );
-  // demosaicing_basic(white_ref_img, demosaiced_white);
-
-  // // white balancing 
-  // homegenise_light(Image_output, demosaiced_white);
-
-  //Image_output.WriteToFile("first_test.bmp");
-  Image_output.WriteToFile(argv[1]);
+  white_balance(Image_input, White_img_input);
+  Image_input.WriteToFile(argv[1]);
 }
 
 // g++ -o demosaice_img init_test.cpp ../EasyBMP.cpp
