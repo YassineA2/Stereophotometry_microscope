@@ -20,7 +20,7 @@
 
 #include "ws2811.h"
 
-#define LED_COUNT 2
+#define LED_COUNT 8
 #define LED_GPIO 18
 
 ws2811_t ledstring =

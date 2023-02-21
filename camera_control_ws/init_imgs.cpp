@@ -41,15 +41,16 @@ int main(){
 	sprintf((char *)buffer_command, "mkdir -p AWB_imgs \r\n" );
 	printf("%s", (char *)buffer_command);
 	// system((char *)buffer_command);
+	int j = 1;
 
-	for (int j = 1; j < nb_leds; j++)
-	{
-		sprintf((char *)buffer_command, "cd ~/Documents/RESEARCH_LAB/led_control_ws/rpi_ws281x-master/build \r\n" );
-    	printf("%s", (char *)buffer_command);
+	// for (int j = 1; j < nb_leds; j++)
+	// {
+		// sprintf((char *)buffer_command, "cd ~/Documents/RESEARCH_LAB/led_control_ws/rpi_ws281x-master/build \r\n" );
+    	// printf("%s", (char *)buffer_command);
     	// system((char *)buffer_command);
 
-		sprintf((char *)buffer_command, "./test %d %d %d %d %d %d %d\r\n", (led_pos[0]==j), (led_pos[1]==j), (led_pos[2]==j), (led_pos[3]==j), (led_pos[4]==j), (led_pos[5]==j), (led_pos[6]==j));
-	   	printf("%s", (char *)buffer_command);
+		// sprintf((char *)buffer_command, "sudo ./test %d \r\n");
+	   	// printf("%s", (char *)buffer_command);
 	   	// system((char *)buffer_command);
 	   	// sleep(200); //in milliseconds
 
@@ -64,23 +65,23 @@ int main(){
 	    	printf("%s", (char *)buffer_command);
 	    	// system((char *)buffer_command);
 
-	    	sprintf((char *)buffer_command, "rm WBI_LD%d_SS%d.jpg \r\n", j, i);
+	    	// sprintf((char *)buffer_command, "rm WBI_LD%d_SS%d.jpg \r\n", j, i);
+	    	// printf("%s", (char *)buffer_command);
+	    	// system((char *)buffer_command);
+
+	    	sprintf((char *)buffer_command, "~/Documents/2_RESEARCH_LAB/MAIN_WS/dcraw -D -c WBI_LD%d_SS%d.dng | ppmtobmp > WBI_LD%d_SS%d.bmp \r\n", j, i, j, i);
 	    	printf("%s", (char *)buffer_command);
 	    	// system((char *)buffer_command);
 
-	    	sprintf((char *)buffer_command, "./dcraw -D -c WBI_LD%d_SS%d.dng | ppmtobmp > WBI_LD%d_SS%d.bmp \r\n", j, i, j, i);
-	    	printf("%s", (char *)buffer_command);
+	    	// sprintf((char *)buffer_command, "rm WBI_LD%d_SS%d.dng \r\n", j, i);
+	    	// printf("%s", (char *)buffer_command);
 	    	// system((char *)buffer_command);
 
-	    	sprintf((char *)buffer_command, "rm WBI_LD%d_SS%d.dng \r\n", j, i);
-	    	printf("%s", (char *)buffer_command);
-	    	// system((char *)buffer_command);
-
-	    	sprintf((char *)buffer_command, "./demosaice_img WBI_LD%d_SS%d.bmp \r\n\r\n\r\n", j, i);
-	    	printf("%s", (char *)buffer_command);
+	    	// sprintf((char *)buffer_command, "./demosaice_img WBI_LD%d_SS%d.bmp \r\n\r\n\r\n", j, i);
+	    	// printf("%s", (char *)buffer_command);
 	    	// system((char *)buffer_command);
 		}
-	}
+	// }
 
 	return 0;
 }

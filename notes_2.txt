@@ -1,4 +1,4 @@
--led_control_ws : workspace of the block that controls leds
+-led_control_ws : workspace of the block that controls leds 
 
 -demosaicing_ws : workspace of the block that does the demosaicing (contains other functions (white balance/ homegenise light) that needs to be made in an independant WS)
 
