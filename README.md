@@ -16,15 +16,17 @@ This repository contains all the necessary codes for the project. It is organise
 # Introduction
 
 # Preparing the environment
-	## Hardware 
-	## Software
+## Hardware 
+## Software
 
 # The workspaces
-	## Controlling the LED's
-	## Capturing the sequence of images
-	## Image processing
-		### Demosaicing
-		### White Balancing 
-	## Communication
+## Controlling the LED's
+## Capturing the sequence of images
+## Image processing
+### Demosaicing
+### White Balancing 
+## Communication
+
+# Example
 
 # Conclusion
