@@ -60,40 +60,16 @@ int main(int argc, char **argv) {
     {
         if(var == i)
         {
-            // Change color of LED at index 0 to red
+            // Change color of the selected LED to white
             ledstring.channel[0].leds[i] = 0xFFFFFF;
             ws2811_render(&ledstring);
         }
         else
         {
-            // Change color of LED at index 0 to red
+            // Turn off the other LED's
             ledstring.channel[0].leds[i] = 0x000000;
             ws2811_render(&ledstring);
         }
     }
-
-
-        // // Change color of LED at index 0 to red
-        // ledstring.channel[0].leds[0] = 0xFFFFFF;
-        // ws2811_render(&ledstring);
-
-        // // // Change color of LED at index 1 to green
-        //  ledstring.channel[0].leds[1] = 0xFFFFFF;
-        //  ws2811_render(&ledstring);
-
-        // // Change color of LED at index 2 to blue
-        // ledstring.channel[0].leds[2] = 0x0000FF;
-        // ws2811_render(&ledstring);
-
-        // // Turn off LED at index 3
-        // ledstring.channel[0].leds[3] = 0x000000;
-        // ws2811_render(&ledstring);
-
-        // // Turn on LED at index 4
-        // ledstring.channel[0].leds[4] = 0xFFFFFF;
-        // ws2811_render(&ledstring);
-
-
-
     ws2811_fini(&ledstring);
 }

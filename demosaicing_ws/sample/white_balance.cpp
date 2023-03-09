@@ -108,6 +108,7 @@ int main( int argc, char* argv[] )
   BMP Image_input;
   BMP White_img_input;
 
+  /* open an image, and the image used for white balancing */
   Image_input.ReadFromFile(argv[1]);
   White_img_input.ReadFromFile(argv[2]);
 
@@ -115,7 +116,7 @@ int main( int argc, char* argv[] )
   Image_input.WriteToFile(argv[1]);
 }
 
-// g++ -o demosaice_img init_test.cpp ../EasyBMP.cpp
+// g++ -o wb_img white_balance.cpp ../EasyBMP.cpp
 
 
 
